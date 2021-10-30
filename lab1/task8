@@ -1,0 +1,4 @@
+#!/bin/bash
+
+fileName="/etc/passwd"
+sort -t":" -n -k 3 $fileName | awk -F':' '{print $1":"$3}'

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+ans=$(ps -o pid,cmd U georgii);
+
+wc -l <<< $ans > t1;
+echo -e "$ans" >> t1; 
+
+

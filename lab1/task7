@@ -1,0 +1,5 @@
+#!/bin/bash
+
+ansName="emails.lst"
+grep -E -ahro "\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b" $(find /etc type -f) | awk 'BEGIN {ORS = ", "} {print $1}' | rev | cut -c 3- | rev  > $ansName
+

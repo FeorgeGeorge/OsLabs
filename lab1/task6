@@ -1,0 +1,11 @@
+#!/bin/bash
+
+fileName="testfile"
+#targetFile="target6"
+targetFile="/var/log/anaconda/X.log"
+
+awk '$2 == "INFO" {$2 = "Information:"; print}' $fileName > $targetFile
+awk '$2 == "WARNING" {$2 = "Warning:"; print}' $fileName >> $targetFile
+cat $targetFile
+
+

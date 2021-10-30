@@ -1,0 +1,17 @@
+#!/bin/bash
+#ps -eo pid | sed '1d' > t4;
+
+while read pid
+do
+#echo "$pid"
+
+ppid=$(awk '/PPid/ {print $2}' /proc/$pid/status);
+sum=$(awk -F":" '/sum_exec_runtime/ {print $2}' /proc/$pid/sched | tr -d [:space:]);
+switches=$(awk -F":" '/nr_switches/ {print $2}' /proc/$pid/sched | tr -d [:space:]);
+time=$(echo "scale=3; $sum/$switches" | bc);
+printf "%d : %d : %s\n" "$pid" "$ppid" "$time";
+done <<< $(ps -eo pid | sed '1d')| sort -t":" -nk 2 > t4
+
+
+
+

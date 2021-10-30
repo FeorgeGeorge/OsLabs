@@ -1,0 +1,9 @@
+#/bin/bash 
+
+while read pid
+do
+	awk '{print $1" "$23}' "/proc/$pid/stat"  >> tmp6;
+done <<< $(ps -eo pid | sed '1d');
+
+cat tmp6 | sort -n -k2 | tail -n1 > t6; 
+rm tmp6;

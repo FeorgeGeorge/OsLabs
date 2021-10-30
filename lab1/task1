@@ -1,0 +1,10 @@
+#!/bin/bash
+var=$1
+for ((i=1; i<=3; i++))
+do
+    if [[ $var -lt ${!i} ]]
+        then 
+            var=${!i}
+    fi
+done
+echo $var

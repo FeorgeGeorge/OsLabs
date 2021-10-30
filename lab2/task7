@@ -1,0 +1,28 @@
+#/bin/bash
+start=$SECONDS;
+> tmp1;
+while read line 
+do
+	pid=$(echo "$line" | cut "-f1" "-d ");
+	cmd=$(echo "$line" | cut "-f2" "-d ");
+	bytes=$(awk '/read_bytes/ {print $2}' "/proc/$pid/io" 2>/dev/null);
+	echo "$pid:$cmd:$bytes" >> tmp1;
+	#echo "$cmd";  
+done <<< $(ps -eo pid,cmd | sed '1d');
+
+sleep 10;
+
+> tmp2;
+while read line
+do 
+	pid=$(echo $line | cut "-f1" "-d:");
+	#echo $pid;
+	new_bytes=$(awk '/read_bytes/ {print $2}' "/proc/$pid/io" 2>/dev/null);
+	#echo "$new_bytes"	
+	echo "$line:$new_bytes" >> tmp2;
+done < tmp1;
+
+awk -F":" 'length($3) > 0 && length($4) > 0 { $(NF+1) = $4 - $3; print $1":"$2":"$5}' tmp2 | sort -t":" -k3 | tail -n3  > t7; 
+rm tmp2;
+rm tmp1;
+

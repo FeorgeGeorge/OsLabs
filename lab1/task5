@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#fileName=testfile
+fileName=var/log/anaconda/syslog
+
+target=info.log
+
+awk '$2 == "INFO"' $fileName > $target
+#cat $target
+

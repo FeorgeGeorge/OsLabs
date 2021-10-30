@@ -1,0 +1,10 @@
+#!/bin/bash
+
+
+ans=0
+for fileName in /var/log/*.log
+do
+ans=$(expr $ans + $(wc -l <  $fileName))
+done
+echo $ans
+

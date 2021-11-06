@@ -10,13 +10,9 @@ while read line
 do
 ppid_fin=$(echo $line | cut "-f2" "-d:" | tr -d [:space:]);
 time_fin=$(echo $line | cut "-f3" "-d:" | tr -d [:space:]);
-#echo "time is $time_fin";
-#echo "sum is $sum";
 count=$(($count+1));
-#echo $count;
 if [[ $ppid_init != $ppid_fin  ]]
 then
-	#echo $count;	
 	printf "Average_Running_Children_of_ParentID=%s is %s\n" $ppid_init $(echo "scale = 4; $sum / $count" | bc) >> t5;
 	ppid_init=$ppid_fin 
 	sum=$time_fin;
